@@ -13,5 +13,5 @@ diveAim (x:xs) (h,d,a) = diveAim xs $ (\(x,y)-> (x+h, a*x+d,a+y)) $  parse x
 
 main = do 
     input <- readFile "input1.txt"
-    putStrLn $ show (dive (lines input) (0,0))
-    putStrLn $ show (diveAim (lines input) (0,0,0))    
+    print (dive (lines input) (0,0))
+    print (diveAim (lines input) (0,0,0))    
