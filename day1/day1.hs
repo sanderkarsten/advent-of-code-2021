@@ -1,4 +1,4 @@
-module Day1 where
+module day1 where
 import Data.List
 
 count(x:y:xs) | x < y = 1 + count (y:xs)
@@ -9,7 +9,9 @@ countSum(a:b:c:d:xs) | a+b+c<b+c+d = 1 + countSum (b:c:d:xs)
 countSum (_:xs) = countSum xs
 countSum _ = 0
 
-strToIntList = map  . lines
+strToIntList = map strToInt . lines
+
+strToInt x = read x::Int
 
 main :: IO()
 main = do 
