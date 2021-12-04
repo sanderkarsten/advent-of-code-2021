@@ -31,8 +31,6 @@ bingo (x:xs) mats = let tMats = map (mark x) mats in
                             Just a -> (a,x)
                             Nothing -> bingo xs tMats
 
-
-
 bingoLose (x:xs) mats = let tMats = map (mark x) mats in 
                            let all = map checkBingo tMats in
                                if length (filter (==False) all) == 1 then bingo xs (filter (not . checkBingo) tMats)
