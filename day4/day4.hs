@@ -1,3 +1,5 @@
+{-# LANGUAGE TupleSections #-}
+
 module Day4 where
 import Data.List
 import Data.Maybe
@@ -6,7 +8,7 @@ type StateMat = [[(Int, Bool)]]
 
 strToInt x = read x :: Int
 
-strToState xs = map ((\x->(x,False)) . strToInt) (words xs)
+strToState xs = map ((, False) . strToInt) (words xs)
 
 formMats (x:xs) cm | x == "" = cm:formMats xs []
 formMats (x:xs) cm = formMats xs (strToState x : cm)
@@ -18,7 +20,7 @@ cbRow =  foldr ((&&) . snd) True
 
 cbRows = foldr ((||) . cbRow) False
 
-cbCols xs | length (head xs) == 0 = False
+cbCols xs | null (head xs) = False
 cbCols xs = cbRow (map head xs) || cbCols (map tail xs)
 
 checkBingo x = cbCols x || cbRows x 
@@ -45,10 +47,9 @@ wordsWhen p s =  case dropWhile p s of
 
 getUnmarked = filter (not . snd)
 
-unmarkedSum (x:xs) = sum (map fst (getUnmarked x)) + unmarkedSum xs
-unmarkedSum [] = 0
+unmarkedSum = foldr ((+) . sum . map fst . getUnmarked) 0
 
 main = do 
     input <- readFile "input.txt"
-    print $ let (x, y) = (bingo (formGameSequence (head (lines input))) (formMats (tail $ tail $ lines input) [])) in unmarkedSum x * y
-    print $ let (x, y) = (bingoLose (formGameSequence (head (lines input))) (formMats (tail $ tail $ lines input) [])) in unmarkedSum x * y
+    print $ let (x, y) = bingo (formGameSequence (head (lines input))) (formMats (tail $ tail $ lines input) []) in unmarkedSum x * y
+    print $ let (x, y) = bingoLose (formGameSequence (head (lines input))) (formMats (tail $ tail $ lines input) []) in unmarkedSum x * y
