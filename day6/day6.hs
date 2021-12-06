@@ -16,7 +16,7 @@ parseInput = map strToInt . splitStringOn ","
 
 shift (x : xs) = let (y, [a, b]) = splitAt 6 xs in y ++ [a + x] ++ [b, x]
 
-initState = map (pred . length) . group . sort . (++ [0 .. 8])
+initState = map (\x->length x-1) . group . sort . (++ [0 .. 8])
 
 main = do 
     input <- readFile "input.txt"
