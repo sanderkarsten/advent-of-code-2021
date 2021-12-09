@@ -37,7 +37,7 @@ findNumbers (x:xs) m | length x == 6 = case lookup 4 m of
 findNumbers (x:xs) m = findNumbers xs m 
 findNumbers [] m = m
 
-executeLine s = let [x,y] = map (splitStringOn " ") $ splitStringOn "|" s in let m = findNumbers x [] in map (\x-> fst $ head (filter (\(a,b)-> b == (sort x)) m)) (tail y)
+executeLine s = let [x,y] = map (splitStringOn " ") $ splitStringOn "|" s in let m = findNumbers x [] in map (\x-> fst $ head (filter (\(a,b)-> b == sort x) m)) (tail y)
 
 toActualNum (a:b:c:d:_) = a*1000+b*100+c*10+d 
 
