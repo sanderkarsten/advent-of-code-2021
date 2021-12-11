@@ -15,8 +15,7 @@ generatePoints :: Int -> Int -> [[Point]]
 generatePoints cl rl = map (flip zip [0..cl] . repeat) [0..rl]
 
 neighbours :: Point -> [Point]
-neighbours (x,y) = filter (\(a,b) -> a>= 0 && b>= 0 && a <= 9 && b <= 9) 
-    [(x-1, y-1), (x-1, y), (x-1, y+1),(x, y-1), (x, y+1),(x+1, y-1), (x+1, y), (x+1, y+1)] 
+neighbours (x,y) = [(x + x', y + y') | x' <- [-1..1], y' <- [-1..1], (x', y') /= (0, 0), x+x'>=0,y+y'>=0,y+y'<=9,x+x'<=9]
 
 increaseAll:: Matrix -> Matrix
 increaseAll = fmap (+1)
@@ -52,4 +51,3 @@ main = do
     input <- readFile "example.txt"
     print $  step1 input
     print $  step2 input
-
